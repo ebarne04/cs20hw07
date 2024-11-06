@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phone Number Validation API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 70%;
+      margin: auto;
+    }
+    .result {
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      margin-top: 20px;
+    }
+    .description {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Phone Number Validation</h1>
+  
+  <label for="phone">Enter Phone Number (with country code):</label>
+  <input type="text" id="phone" placeholder="e.g., +14155552671">
+  
+  <button onclick="validatePhoneNumber()">Validate</button>
+  
+  <div id="result" class="result"></div>
+  
+  <div class="description">
+    <h2>About the API</h2>
+    <p>The API used in this example is the Apilayer Phone Number Validation API. This API allows users to validate phone numbers, providing details such as the country, carrier, line type, and whether the number is valid.</p>
+    
+    <h3>Source</h3>
+    <p>Website: <a href="https://apilayer.com" target="_blank">https://apilayer.com</a></p>
+    
+    <h3>API Request Details</h3>
+    <p>This example uses the following parameters:</p>
+    <ul>
+      <li><strong>access_key</strong>: Your API key</li>
+      <li><strong>number</strong>: The phone number to validate</li>
+    </ul>
+    
+    <h3>Applications</h3>
+    <p>This API can be helpful in the following scenarios:</p>
+    <ul>
+      <li>In CRM systems, to verify the accuracy of customer phone numbers before adding them to a database.</li>
+      <li>In telecommunication services, to determine the type of phone line (e.g., mobile, landline) and ensure valid numbers are dialed.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  async function validatePhoneNumber() {
+    const phone = document.getElementById('phone').value;
+    const apiKey = '174c1de16569eb1b62ccdd7be239c78c';
+    const apiUrl = `http://apilayer.net/api/validate?access_key=${apiKey}&number=${phone}&format=1`;
+    
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      
+      if (!data.valid) {
+        document.getElementById('result').innerHTML = '<p>Invalid</p>';
+      } else {
+        document.getElementById('result').innerHTML = `
+          <h3>Validation Results</h3>
+          <p><strong>Valid:</strong> Yes</p>
+          <p><strong>Number:</strong> ${data.number}</p>
+          <p><strong>Country:</strong> ${data.country_name} (${data.country_code})</p>
+          <p><strong>Carrier:</strong> ${data.carrier}</p>
+          <p><strong>Line Type:</strong> ${data.line_type}</p>
+        `;
+      }
+    } catch (error) {
+      document.getElementById('result').innerHTML = '<p>Error fetching data. Please try again.</p>';
+      console.error('Error:', error);
+    }
+  }
+</script>
+
+</body>
+</html>
