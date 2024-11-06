@@ -61,7 +61,7 @@
   async function validatePhoneNumber() {
     const phone = document.getElementById('phone').value;
     const apiKey = '174c1de16569eb1b62ccdd7be239c78c';
-    const apiUrl = `http://apilayer.net/api/validate?access_key=${apiKey}&number=${phone}&format=1`;
+    const apiUrl = `https://apilayer.net/api/validate?access_key=${apiKey}&number=${phone}&format=1`;
     
     try {
       const response = await fetch(apiUrl);
